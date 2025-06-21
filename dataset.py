@@ -59,17 +59,29 @@ for index in range(len(sorted_by_date[1])):
     frp = np.round(np.average(sorted_by_date[1][index]["frp"]))
     fire_type = np.median(sorted_by_date[1][index]["type"])
     confidence = np.round(np.average(sorted_by_date[1][index]["confidence"]))
+    
+    province = ""
+
+    for key, value in iran_provinces_extent.items():
+        if (latitude <= value[1] and latitude >= value[0]) and (longitude <= value[3] and longitude >= value[2]):
+            province = key
 
     if confidence > 50 and fire_type == 2:
         high_confidence.append({
-            "date":date,
-            "latitude":latitude,
-            "longitude":longitude,
-            "frp":frp
+            "date": date,
+            "latitude": latitude,
+            "longitude": longitude,
+            "frp": frp, 
+            "province": province
         })
 
 high_confidence = pd.DataFrame(high_confidence)
+province = pd.DataFrame(high_confidence.groupby("province").count()["date"]).to_dict()["date"]
 
+plt.subplot(1, 2, 1)
 plt.scatter(x=high_confidence["latitude"], y=high_confidence["longitude"], 
             s=high_confidence["frp"]/2, c=high_confidence["frp"])
+
+plt.subplot(1, 2, 2)
+plt.bar(x=np.array(list(province.keys())), height=province.values())
 plt.show()
