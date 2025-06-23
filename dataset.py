@@ -51,7 +51,6 @@ iran_provinces_extent = {
     "Zanjan":                     (35.8, 36.7, 47.2, 49.0),
 }
 
-
 for index in range(len(sorted_by_date[1])):
     date = sorted_by_date[0][index]
     latitude = np.average(sorted_by_date[1][index]["latitude"])
@@ -83,5 +82,6 @@ plt.scatter(x=high_confidence["latitude"], y=high_confidence["longitude"],
             s=high_confidence["frp"]/2, c=high_confidence["frp"])
 
 plt.subplot(1, 2, 2)
+plt.xticks(rotation="vertical")
 plt.bar(x=np.array(list(province.keys())), height=province.values())
 plt.show()
