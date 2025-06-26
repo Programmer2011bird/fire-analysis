@@ -118,4 +118,4 @@ def get_dataloader():
     dataset = fire_dataset(X, Y)
     dataloader = DataLoader(dataset, shuffle=True, batch_size=64)
 
-    return dataloader
+    return dataloader, province_to_idx
